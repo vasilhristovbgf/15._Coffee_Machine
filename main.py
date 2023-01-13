@@ -1,4 +1,6 @@
 import menu
+import time
+import os
 
 print("What would you like to drink?")
 usrOrder = input("espresso || latte || cappuccino ")
@@ -6,7 +8,8 @@ usrOrder = input("espresso || latte || cappuccino ")
 
 def drink(order):
     if order == "report":
-        print(menu.resources)
+        for i in menu.resources:
+            print(f"{i}: {menu.resources[i]}")
     else:
         water = menu.MENU[order]["ingredients"]["water"]
         coffee = menu.MENU[order]["ingredients"]["coffee"]
@@ -22,8 +25,10 @@ def drink(order):
                     menu.resources["coffee"] -= coffee
                     menu.resources["milk"] -= milk
                     print("Drink is ready")
+                    for i in menu.resources:
+                        print(f"{i}: {menu.resources[i]}")
+                    time.sleep(3)
+                    os.system('cls')
 
 
 drink(usrOrder)
-
-print(menu.MENU["espresso"]["ingredients"]["water"])
