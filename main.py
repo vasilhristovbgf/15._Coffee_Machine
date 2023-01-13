@@ -29,6 +29,7 @@ def drink(order):
                         print(f"{i}: {menu.resources[i]}")
                     time.sleep(3)
                     os.system('cls')
+                    time.sleep(3)
 
 
 drink(usrOrder)
