@@ -16,7 +16,7 @@ def checkRes(a, b, c, order):
 
     #Check water:
     if menu.resources["water"] < a:
-        print("Error: Insufficient Water")
+        print("Error: Not Enough Water")
         if input("Please type *reload* to add water: ") == "reload":
             menu.resources["water"] = 300
             print("Water reloaded successfully! ")
@@ -26,7 +26,7 @@ def checkRes(a, b, c, order):
 
     #Check coffee:
     if menu.resources["coffee"] < b:
-        print("Error: Insufficient Coffee")
+        print("Error: Not Enough Coffee")
         if input("Please type *reload* to add coffee: ") == "reload":
             menu.resources["coffee"] = 300
             print("Coffee reloaded successfully! ")
@@ -36,8 +36,7 @@ def checkRes(a, b, c, order):
 
     #Check milk:
     if menu.resources["milk"] < c:
-        resources = False
-        print("Error: Insufficient Milk")
+        print("Error: Not Enough Milk")
         if input("Please type *reload* to add milk: ") == "reload":
             menu.resources["milk"] = 300
             print("Milk reloaded successfully! ")
@@ -45,11 +44,9 @@ def checkRes(a, b, c, order):
             print("No milk has been added. ")
             resources = False
 
-    if resources == True:
-        print(f"Enough resources for {order} available!")
-    else:
-        resources = False
-        print("Insufficient resources, please try again! ")
+    if resources == False:
+
+        print("Not enough resources, please try again! ")
         goOn = input("Press *Enter* to Continue...")
 
     return resources
@@ -58,17 +55,49 @@ def askMoney(item):
     price = menu.MENU[item]["cost"]
     money = 0
     #while money < price:
-    money += 0.25*float(input("How many quarters? "))
-    money += 0.10*float(input("How many dimes? "))
-    money += 0.05*float(input("How many nickels? "))
-    money += 0.01*float(input("How many pennies? "))
+    while True:
+        try:
+            money += 0.25*float(input("How many quarters? "))
+            break
+        except:
+            print("Please only input numbers..")
+            continue
+
+    while True:
+        try:
+            money += 0.10*float(input("How many dimes? "))
+            break
+        except:
+            print("Please only input numbers..")
+            continue
+
+    while True:
+        try:
+            money += 0.05*float(input("How many nickels? "))
+            break
+        except:
+            print("Please only input numbers..")
+            continue
+
+    while True:
+        try:
+            money += 0.01*float(input("How many pennies? "))
+            break
+        except:
+            print("Please only input numbers..")
+            continue
+
     print(f"Total: {money}")
+    if len(menu.resources) == 3:
+        menu.resources["income"] = money
 
     if money == price:
+        menu.resources["income"] += money
         return money
     elif money > price:
         print(f"Here's your change: {round(money-price, 2)}")
         money = price
+        menu.resources["income"] += money
         return money
     elif money < price:
         print(f"Not enough money inserted. Here is your change: {round(money, 2)}")
